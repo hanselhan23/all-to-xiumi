@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.backends._legacy:_Backend"
+
+[project]
+name = "all-to-xiumi"
+version = "0.1.0"
+description = "HTML / Markdown / PDF → 秀米草稿一键生成（合并 html-to-xiumi 与 xiumi_publisher）"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.11"
+dependencies = [
+    "selenium>=4.20.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+]
+pdf = [
+    "pdfplumber>=0.10.0",
+]
+
+[project.scripts]
+all-to-xiumi = "all_to_xiumi.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["all_to_xiumi*"]
