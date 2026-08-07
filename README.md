@@ -66,6 +66,19 @@ all-to-xiumi path/to/your.html --title "推送标题" --dry-run
 
 > 发布完成后浏览器保持打开，方便人工检查 / 微调；回到命令行按 **Enter** 关闭。
 
+## Claude Code Skill
+
+仓库自带 Claude Code skill（`.claude/skills/all-to-xiumi/SKILL.md`）。在 `all-to-xiumi` 目录内使用时自动生效，可直接对 Claude Code 说「把 `file.md` 发成秀米草稿」或 `/all-to-xiumi`，由 Claude 调用本仓库的发布功能。skill 内沉淀了经真实草稿验证的编辑器陷阱（innerHTML 不渲染、paste 剥样式、data: URL 保存后被剥离、CDN 内联、`--preserve-styles` 模型 schema 等）。
+
+若希望在任何项目里全局可用，把 skill 复制到本地技能目录：
+
+```powershell
+$local = Join-Path $HOME ".claude\skills\all-to-xiumi"
+Copy-Item -Recurse .claude\skills\all-to-xiumi $local
+```
+
+之后修改仓库里的 `SKILL.md` 时，重新执行上面的 `Copy-Item`（或把 `$local` 建成仓库目录的符号链接）以同步本地副本。
+
 ## 主要选项
 
 | 选项 | 说明 |
