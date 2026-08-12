@@ -1,0 +1,13 @@
+# Gradle
+.gradle/
+build/
+# 本地环境配置（SDK 路径，机器相关，不提交）
+local.properties
+# IDE
+.idea/
+*.iml
+# Kotlin
+.kotlin/
+# 系统文件
+.DS_Store
+Thumbs.db

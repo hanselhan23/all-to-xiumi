@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 启动图标：蓝色圆底 + 白色“万”字形抽象（发布阶段的占位图标） -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <path
+        android:fillColor="#2F6F9F"
+        android:pathData="M54,6 A48,48 0 1,1 53.99,6 Z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M31,38 L31,31 L77,31 L77,38 L58,38 L58,77 L50,77 L50,38 Z" />
+</vector>

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Compose 应用宿主主题：无 ActionBar，避免与 Compose 内容重复标题栏 -->
+    <style name="Theme.WanyouXiumi" parent="android:Theme.Material.Light.NoActionBar" />
+</resources>

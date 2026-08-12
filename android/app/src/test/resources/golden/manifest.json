@@ -1,0 +1,26 @@
+{
+  "markdown/sample_generic.html": {
+    "input": "sample.md",
+    "template": "generic"
+  },
+  "markdown/sample_wanyou.html": {
+    "input": "sample.md",
+    "template": "wanyou"
+  },
+  "markdown/sample_red.html": {
+    "input": "sample.md",
+    "template": "red"
+  },
+  "markdown/extended_generic.html": {
+    "input": "extended.md",
+    "template": "generic"
+  },
+  "markdown/extended_wanyou.html": {
+    "input": "extended.md",
+    "template": "wanyou"
+  },
+  "markdown/extended_red.html": {
+    "input": "extended.md",
+    "template": "red"
+  }
+}

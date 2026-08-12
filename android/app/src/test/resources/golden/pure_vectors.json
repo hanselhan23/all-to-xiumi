@@ -1,0 +1,269 @@
+{
+  "inputs": {
+    "render_inline_markdown": [
+      "**粗体**与*斜体*和`代码`及[链接](https://a.b/c?x=1&y=2)",
+      "普通文本 <b>&</b> 转义",
+      "**链接内的粗体** http://直接地址"
+    ],
+    "render_inline_markdown_red": "**红**模板*内联*`code`",
+    "split_label_value": [
+      "日期: 2024-01-15",
+      "地点：清华大学 礼堂",
+      "没有冒号的行",
+      "太长太长太长太长太长太长太长太长太长太长太长: 值"
+    ],
+    "is_table_row": [
+      "| a | b |",
+      "| a |",
+      "普通行"
+    ],
+    "is_table_separator": [
+      "|---|---|",
+      "|:---|:---:|",
+      "|---|--|"
+    ],
+    "split_table_row": "| a | b\\|c | d |",
+    "is_ordered_list_item": [
+      "1. 第一",
+      "12. 十二",
+      "1. 无空格后文本"
+    ],
+    "is_remote_or_data": [
+      "https://a.b/c.png",
+      "//cdn.a.b/x.png",
+      "data:image/png;base64,xx",
+      "images/a.png",
+      "C:/Users/a.png",
+      "ftp://a.b/x",
+      "mailto:a@b.c",
+      ""
+    ],
+    "clean_target": [
+      "images\\wanyou20260531_1131\\1.jpg",
+      "images/wanyou_20260531_1131/2.jpg",
+      "\"images/quoted.png\"",
+      "<images/angle.png>",
+      "images\\a_b.png",
+      "images/x.png?w=1",
+      "https://a.b/c.png?x=1",
+      "data:image/png;base64,zzz",
+      "C:\\Users\\a\\b.png",
+      "images/inline/wanyou20260531_1131_0.jpg"
+    ],
+    "iter_candidates": [
+      "images/wanyou20260531_1131/1.jpg",
+      "output/20260428/1030/images/inline/wanyou20260428_1030_0.jpg"
+    ],
+    "resolve_existing": [
+      "images/wanyou20260531_1131/1.jpg",
+      "images/nope.jpg"
+    ],
+    "sample_html": "<main class=\"page hero-v2\"><section style=\"margin:0 auto;background:#f5f8fc;\"><h1 style=\"font-size:38px;color:#1a344c;\">大标题</h1></section><section style=\"background:#e3eff9;\"><p style=\"font-size:16px;line-height:2;margin:0 8px;letter-spacing:1px;\">正文段落一</p><p style=\"color:#3a4a5c;\">正文段落二</p><img src=\"images/a.png\" alt=\"配图一\" style=\"width:100%;\" /><img src=\"https://cdn.example.com/b.png\" alt=\"远程图\" /></section></main>",
+    "extract_main_html_body": "<html><body><p>x</p></body></html>",
+    "extract_main_html_raw": "<div>无main</div>",
+    "camelize_css": "margin:0 auto; Background-Color:#fff;box-sizing:border-box;font-Size:14px;-webkit-x:1;broken",
+    "flatten_inner_html": "<!-- 注释 --><section style=\"margin:0\"><span>chip</span><p>正文</p><p></p></section><div class=\"x\">  多  空格  </div>",
+    "first_heading": "# 标题\n正文",
+    "first_summary_line": "\n## 节\n![图](x.png)\n这是摘要第一行。\n",
+    "image_urls_from_text": "a //img.xiumi.us/xmi/ua/abc/123.png b https://statics.xiumi.us/stc/1.png c \"https://a.b/xmi/ua/2.jpg\" d",
+    "normalize_urls": [
+      "//img.xiumi.us/x/1.png",
+      "\\/\\/img.xiumi.us/x/2.png",
+      "https://a.b/c"
+    ],
+    "looks_like_user_image": [
+      "https://img.xiumi.us/xmi/ua/1/1.png",
+      "https://statics.xiumi.us/stc/x.png",
+      "https://a.b/xmi/ua/2.jpg",
+      ""
+    ],
+    "upload_name_variants_path": "images/My Photo.PNG",
+    "upload_image_key_path": "a/b/My-Photo_2.jpg",
+    "upload_image_key_source": "images/wanyou_20260531_1131/1.jpg",
+    "asset_matches_asset": {
+      "files": [
+        "my-photo_2.JPG"
+      ],
+      "text": "我的图库"
+    },
+    "asset_matches_path": "a/b/My-Photo_2.jpg"
+  },
+  "render_inline_markdown": [
+    {
+      "in": "**粗体**与*斜体*和`代码`及[链接](https://a.b/c?x=1&y=2)",
+      "out": "<strong style=\"color:#1a344c;font-weight:700;\">粗体</strong>与<em style=\"color:#5c7d99;font-style:italic;\">斜体</em>和<code style=\"background:#d8ecf8;padding:1px 5px;border-radius:3px;font-size:0.9em;\">代码</code>及<a href=\"https://a.b/c?x=1&amp;amp;y=2\" style=\"color:#3b8cc7;text-decoration:underline;word-break:break-all;\">链接</a>"
+    },
+    {
+      "in": "普通文本 <b>&</b> 转义",
+      "out": "普通文本 &lt;b&gt;&amp;&lt;/b&gt; 转义"
+    },
+    {
+      "in": "**链接内的粗体** http://直接地址",
+      "out": "<strong style=\"color:#1a344c;font-weight:700;\">链接内的粗体</strong> http://直接地址"
+    }
+  ],
+  "split_label_value": [
+    {
+      "in": "日期: 2024-01-15",
+      "out": [
+        "日期",
+        "2024-01-15"
+      ]
+    },
+    {
+      "in": "地点：清华大学 礼堂",
+      "out": [
+        "地点",
+        "清华大学 礼堂"
+      ]
+    },
+    {
+      "in": "没有冒号的行",
+      "out": [
+        "",
+        "没有冒号的行"
+      ]
+    },
+    {
+      "in": "太长太长太长太长太长太长太长太长太长太长太长: 值",
+      "out": [
+        "",
+        "太长太长太长太长太长太长太长太长太长太长太长: 值"
+      ]
+    }
+  ],
+  "render_inline_markdown_red": [
+    {
+      "in": "**红**模板*内联*`code`",
+      "out": "<strong style=\"color:#a82020;font-weight:700;\">红</strong>模板<em style=\"color:#8b5a5a;font-style:italic;\">内联</em><code style=\"background:#f8e0e0;padding:1px 5px;border-radius:3px;font-size:0.9em;\">code</code>"
+    }
+  ],
+  "table_helpers": {
+    "is_table_row": [
+      true,
+      true,
+      false
+    ],
+    "is_table_separator": [
+      true,
+      true,
+      false
+    ],
+    "split_table_row": [
+      "a",
+      "b|c",
+      "d"
+    ],
+    "is_ordered_list_item": [
+      true,
+      true,
+      true
+    ]
+  },
+  "image_paths": {
+    "is_remote_or_data": [
+      true,
+      true,
+      true,
+      false,
+      false,
+      true,
+      true,
+      false
+    ],
+    "clean_target": [
+      "images\\wanyou20260531_1131\\1.jpg",
+      "images\\wanyou_20260531_1131\\2.jpg",
+      "images\\quoted.png",
+      "images\\angle.png",
+      "images\\a_b.png",
+      "images\\x.png",
+      "https://a.b/c.png",
+      "data:image/png;base64,zzz",
+      "C:\\Users\\a\\b.png",
+      "images\\inline\\wanyou20260531_1131_0.jpg"
+    ],
+    "iter_candidates": [
+      [
+        "<TMP>\\images\\wanyou20260531_1131\\1.jpg",
+        "<ROOT>\\images\\wanyou20260531_1131\\1.jpg",
+        "<TMP>\\images\\_wanyou_20260531_1131\\1.jpg",
+        "<ROOT>\\images\\_wanyou_20260531_1131\\1.jpg"
+      ],
+      [
+        "<TMP>\\output\\20260428\\1030\\images\\inline\\wanyou20260428_1030_0.jpg",
+        "<ROOT>\\output\\20260428\\1030\\images\\inline\\wanyou20260428_1030_0.jpg",
+        "<TMP>\\images\\inline\\wanyou20260428_1030_0.jpg",
+        "<ROOT>\\images\\inline\\wanyou20260428_1030_0.jpg"
+      ]
+    ],
+    "resolve_existing": [
+      "<TMP>\\images\\wanyou20260531_1131\\1.jpg",
+      ""
+    ]
+  },
+  "xiumi_pure": {
+    "extract_main_html": "<section style=\"margin:0 auto;background:#f5f8fc;\"><h1 style=\"font-size:38px;color:#1a344c;\">大标题</h1></section><section style=\"background:#e3eff9;\"><p style=\"font-size:16px;line-height:2;margin:0 8px;letter-spacing:1px;\">正文段落一</p><p style=\"color:#3a4a5c;\">正文段落二</p><img src=\"images/a.png\" alt=\"配图一\" style=\"width:100%;\" /><img src=\"https://cdn.example.com/b.png\" alt=\"远程图\" /></section>",
+    "extract_main_html_body": "<p>x</p>",
+    "extract_main_html_raw": "<div>无main</div>",
+    "apply_base_format": "<main class=\"page hero-v2\"><section style=\"margin:0 auto;background:#f5f8fc;\"><h1 style=\"font-size:18px;color:#1a344c;\">大标题</h1></section><section style=\"background:#e3eff9;\"><p style=\"font-size:14px;line-height:1.6;letter-spacing:0px;margin-top:0;margin-bottom:0;margin-left:0px;margin-right:0px\">正文段落一</p><p style=\"color:#3a4a5c;font-size:14px;line-height:1.6;letter-spacing:0px;margin-left:0px;margin-right:0px\">正文段落二</p><img src=\"images/a.png\" alt=\"配图一\" style=\"width:100%;\" /><img src=\"https://cdn.example.com/b.png\" alt=\"远程图\" /></section></main>",
+    "promote_headings": "<main class=\"page hero-v2\"><section style=\"margin:0 auto;background:#f5f8fc;\"><h1 style=\"font-size:38px;color:#1a344c;\">大标题</h1></section><section style=\"background:#e3eff9;\"><p style=\"font-size:16px;line-height:2;margin:0 8px;letter-spacing:1px;\">正文段落一</p><p style=\"color:#3a4a5c;\">正文段落二</p><img src=\"images/a.png\" alt=\"配图一\" style=\"width:100%;\" /><img src=\"https://cdn.example.com/b.png\" alt=\"远程图\" /></section></main>",
+    "camelize_css": {
+      "margin": "0 auto",
+      "backgroundColor": "#fff",
+      "fontSize": "14px",
+      "WebkitX": "1"
+    },
+    "flatten_inner_html": "<p style=\"margin:0\"><span>chip</span><p>正文</p></p><p class=\"x\"> 多 空格 </p>",
+    "blocks": [
+      {
+        "style": {
+          "margin": "0 auto",
+          "background": "#f5f8fc"
+        },
+        "text": "<h1 style=\"font-size:38px;color:#1a344c;\">大标题</h1>"
+      },
+      {
+        "style": {
+          "background": "#e3eff9"
+        },
+        "text": "<p style=\"font-size:16px;line-height:2;margin:0 8px;letter-spacing:1px;\">正文段落一</p><p style=\"color:#3a4a5c;\">正文段落二</p><img src=\"images/a.png\" alt=\"配图一\" style=\"width:100%;\" /><img src=\"https://cdn.example.com/b.png\" alt=\"远程图\" />"
+      }
+    ],
+    "first_heading": "标题",
+    "first_summary_line": "这是摘要第一行。",
+    "image_urls_from_text": [
+      "https://img.xiumi.us/xmi/ua/abc/123.png",
+      "https://a.b/xmi/ua/2.jpg"
+    ],
+    "normalize_urls": [
+      "https://img.xiumi.us/x/1.png",
+      "https://img.xiumi.us/x/2.png",
+      "https://a.b/c"
+    ],
+    "looks_like_user_image": [
+      true,
+      false,
+      true,
+      false
+    ],
+    "upload_name_variants": [
+      "my photo",
+      "my photo.gif",
+      "my photo.jpeg",
+      "my photo.jpg",
+      "my photo.png",
+      "my photo.webp"
+    ],
+    "upload_image_key": [
+      "my-photo_2",
+      "1"
+    ],
+    "asset_matches": [
+      [
+        true,
+        100
+      ]
+    ]
+  }
+}
