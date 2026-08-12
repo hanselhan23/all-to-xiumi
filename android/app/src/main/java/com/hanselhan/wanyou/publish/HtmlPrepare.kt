@@ -626,7 +626,7 @@ object HtmlPrepare {
             if (remoteUrl.isEmpty()) return@replace tag
             replaced += 1
             Regex("\\bsrc=(['\"])(.*?)\\1", RegexOption.IGNORE_CASE)
-                .replaceFirst(tag) { "src=$quote$remoteUrl$quote" }
+                .replaceFirst(tag, "src=$quote$remoteUrl$quote")
         }
         return rewritten
     }

@@ -30,17 +30,17 @@ class PublishViewModel(application: Application) : AndroidViewModel(application)
     private val fileChooser = FileChooserBridge()
 
     @SuppressLint("SetJavaScriptEnabled")
-    val webView: WebView = WebView(application).apply {
+    val webView: WebView = WebView(application).also { wv ->
         // 秀米编辑器是桌面端 Web 应用：JS + DOM 存储 + 桌面 Chrome UA
-        settings.javaScriptEnabled = true
-        settings.domStorageEnabled = true
-        settings.userAgentString = DESKTOP_CHROME_UA
+        wv.settings.javaScriptEnabled = true
+        wv.settings.domStorageEnabled = true
+        wv.settings.userAgentString = DESKTOP_CHROME_UA
         // 登录态持久化：秀米 Cookie 保存在应用私有目录，下次发布免登录
         CookieManager.getInstance().apply {
             setAcceptCookie(true)
-            setAcceptThirdPartyCookies(this@apply, true)
+            setAcceptThirdPartyCookies(wv, true)
         }
-        webChromeClient = object : WebChromeClient() {
+        wv.webChromeClient = object : WebChromeClient() {
             override fun onShowFileChooser(
                 view: WebView?,
                 filePathCallback: ValueCallback<Array<Uri>>?,

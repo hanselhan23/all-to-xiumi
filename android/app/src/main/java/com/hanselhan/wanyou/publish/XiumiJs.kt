@@ -577,8 +577,7 @@ function(BLOCKS) {
       pose: { position: "static", width: null, height: null },
       style: {},
       tplId: "paper-cp:header/1-txt-normal",
-      _$uuid: "comp-" + Date.now().toString(36) + i,
-    },
+      _${'$'}uuid: "comp-" + Date.now().toString(36) + i,    },
     txt1: { type: "text", text: b.text, style: b.style },
   }));
   const run = function () {

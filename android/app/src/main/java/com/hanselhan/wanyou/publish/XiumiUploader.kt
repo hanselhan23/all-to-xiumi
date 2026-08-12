@@ -80,7 +80,7 @@ class XiumiUploader(
     /** 页面可见的上传提示文案 → 上传状态（`_xiumi_upload_state`）。 */
     suspend fun uploadState(): UploadState = runCatching {
         val messages = (eval(XiumiJs.UPLOAD_MESSAGES) as? JSONArray)?.let { arr ->
-            (0 until arr.length()).map { arr.optString(i) }.filter { it.isNotEmpty() }
+            (0 until arr.length()).map { arr.optString(it) }.filter { it.isNotEmpty() }
         } ?: emptyList()
         val text = messages.joinToString("\n")
         val busy = Regex("(正在上传|上传中|请稍后再试|稍后再试)", RegexOption.IGNORE_CASE).containsMatchIn(text)

@@ -6,6 +6,7 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlinx.coroutines.suspendCancellableCoroutine
 import org.json.JSONArray
+import org.json.JSONObject
 import org.json.JSONTokener
 
 /**
@@ -57,7 +58,7 @@ object JsBridge {
     /** 便捷：把返回值安全转成字符串。 */
     fun Any?.asString(): String = when (this) {
         null -> ""
-        JSONArray.NULL -> ""
+        JSONObject.NULL -> ""
         is String -> this
         else -> toString()
     }

@@ -156,7 +156,7 @@ class XiumiPublisher(
         } catch (e: Exception) {
             val url = runCatching { currentUrl() }.getOrDefault(editorUrl)
             log("秀米：发生异常：${e::class.simpleName}: ${e.message}")
-            PublishResult("error", editorUrl = url, error = "${e::class.simpleName}: ${e.message}")
+            return PublishResult("error", editorUrl = url, error = "${e::class.simpleName}: ${e.message}")
         }
     }
 

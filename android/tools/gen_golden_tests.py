@@ -38,7 +38,8 @@ def main() -> None:
         for template in ("generic", "wanyou", "red"):
             html_out = m2h.markdown_to_html(text, template=template)
             rel = f"markdown/{fixture_name.removesuffix('.md')}_{template}.html"
-            (OUT / rel).write_text(html_out, encoding="utf-8")
+            # newline="\n"：金标必须是 LF，避免 Windows 下写出 CRLF 与 Kotlin 输出不一致
+            (OUT / rel).write_text(html_out, encoding="utf-8", newline="\n")
             manifest[rel] = {"input": fixture_name, "template": template}
 
     # ── 2. 纯函数测试向量（JSON） ──
@@ -209,11 +210,11 @@ def main() -> None:
     }
 
     (OUT / "pure_vectors.json").write_text(
-        json.dumps(vectors, ensure_ascii=False, indent=2), encoding="utf-8")
+        json.dumps(vectors, ensure_ascii=False, indent=2), encoding="utf-8", newline="\n")
 
     # ── 3. 清单 ──
     (OUT / "manifest.json").write_text(
-        json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
+        json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8", newline="\n")
     print(f"golden 已生成：{OUT}")
 
 
