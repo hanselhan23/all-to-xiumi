@@ -70,6 +70,8 @@ all-to-xiumi path/to/your.html --title "推送标题" --dry-run
 
 仓库自带 Claude Code skill（`.claude/skills/all-to-xiumi/SKILL.md`）。在 `all-to-xiumi` 目录内使用时自动生效，可直接对 Claude Code 说「把 `file.md` 发成秀米草稿」或 `/all-to-xiumi`，由 Claude 调用本仓库的发布功能。skill 内沉淀了经真实草稿验证的编辑器陷阱（innerHTML 不渲染、paste 剥样式、data: URL 保存后被剥离、CDN 内联、`--preserve-styles` 模型 schema 等）。
 
+默认入口为[中文版本](.claude/skills/all-to-xiumi/SKILL.md)，同时保留[英文版本](.claude/skills/all-to-xiumi/SKILL.en.md)。两份文档均要求正常发布时实际点击秀米的“保存”按钮，并在保存成功后重新载入草稿验证内容。
+
 若希望在任何项目里全局可用，把 skill 复制到本地技能目录：
 
 ```powershell
@@ -123,7 +125,9 @@ result = run_skill("input.md", template="generic", title="标题", author="作�
 
 ```
 all-to-xiumi/
-├── .claude/skills/all-to-xiumi/SKILL.md   # Claude Code skill（含编辑器陷阱）
+├── .claude/skills/all-to-xiumi/
+│   ├── SKILL.md               # 中文 skill 入口（含编辑器陷阱）
+│   └── SKILL.en.md            # 英文 skill
 ├── all_to_xiumi/
 │   ├── cli.py                 # 统一命令行入口
 │   ├── skill_pipeline.py      # run_skill：输入分发 + md/pdf 转换 + 发布
