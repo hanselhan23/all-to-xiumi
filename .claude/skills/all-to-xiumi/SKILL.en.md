@@ -1,6 +1,6 @@
 ---
 name: all-to-xiumi
-description: Turn a local HTML / Markdown / PDF file into a saved Xiumi 秀米 editor draft. Use when finished content (a designed HTML page, or a Markdown/PDF document) needs to become a Xiumi draft — HTML input can preserve the source design's inline styles (backgrounds, gradients, borders, fonts) via --preserve-styles; Markdown/PDF input is converted through a template system (generic/wanyou/red) then published. Focuses on the single publish step; does not crawl or generate content.
+description: Save local HTML, Markdown, or PDF content as a Xiumi editor draft. Prefer native Xiumi modules when an article needs continued authoring, graphical editing, or template handoff. HTML can retain inline design styles with --preserve-styles; Markdown/PDF use template conversion. Covers import, module organization, and saving, not material collection or automatic body-text generation.
 ---
 
 # all-to-xiumi
@@ -16,6 +16,19 @@ One CLI + Python API that turns a local file into a saved Xiumi (秀米) draft:
 | `.html` | Passed straight to the publish core. Default paste path; `--preserve-styles` keeps the design's inline styles. |
 | `.md` | Converted by `markdown_to_html` (template system) → HTML file → publish core. |
 | `.pdf` | Text extracted (pdfplumber) → treated as Markdown source → same as `.md`. |
+
+## Article authoring: prefer native Xiumi modules
+
+**For articles that need continued authoring in Xiumi, ongoing maintenance, or handoff, recommend and prefer native Xiumi modules by default.** Keep headings, body text, framed text boxes, photo rows, and images independently selectable, duplicable, editable, and replaceable while retaining the user's visual design. Respect an explicit request for a whole HTML block or a one-time publish; do not add a migration or change assets unnecessarily.
+
+- Use a native layout around native text for a framed box. Put borders, glow, corner decorations, and padding on the frame; allow auto/minimum height so long text expands it.
+- Use native image components and native row/column layouts for photos. Separate decorations and animation from editable body content, preserving stacking, opacity, and responsive proportions.
+- `--preserve-styles` preserves styles; **it does not automatically create native modules**. A whole text block is not evidence of modularity. Do not blindly flatten a complex nested layout into paragraphs.
+- Migrate an existing online draft in place or to a new copy according to the user's authorization. Preserve unsaved manual edits; this preference does not authorize additional drafts or changes to other articles.
+- Actually test whole-frame duplication, long-text expansion, and image replacement. Restore final content, click the visible Save button, confirm success, and reload.
+- Obtain HTML from the reloaded draft through Xiumi's ordinary Export → continue with copy/paste flow. Visually compare phone and wide layouts with the source, checking typography, colors, frame decorations, photo columns, background angle, animation, and footer clipping. Report a WeChat save round-trip as passed only after actually pasting, saving, and previewing there; state the verification boundary when the WeChat draft is read-only.
+
+For component construction, design migration, and export issues, read [Native Xiumi authoring and validation](references/modular-authoring.md) (Chinese). The CLI remains the single-publish interface described below; do not invent a modularity flag.
 
 ## Commands
 
@@ -121,6 +134,8 @@ A `data:image/...` URL written into a text comp's model renders in the editor bu
 Clear = Ctrl+A + Delete, then re-paste; only the last content survives. Gotcha: when the HTML has no images, `final_html == text_first_html`, so the second clear+paste wipes the already-rendered content → empty draft. `_fill_xiumi_body_then_images` guards with `if final_html != text_first_html:` to skip the second paste.
 
 ### Preserve-styles comp schema
+
+This is the existing text-block import implementation, not native modular authoring. Flattening nested sections/divs into paragraphs can break grids, stacking, and complex layouts; use the native-module workflow above when those structures must remain editable.
 
 Each TOP-LEVEL `<section>` of the source becomes one block:
 

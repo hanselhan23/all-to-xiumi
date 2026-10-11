@@ -15,6 +15,8 @@
 | `.md` | 用模板系统（`generic` / `wanyou` / `red`）转成富文本 HTML，再发布。 |
 | `.pdf` | 提取文本（pdfplumber）后按 Markdown 源处理，走与 `.md` 相同流程。 |
 
+需要在秀米中继续编写或交接的推送，技能默认推荐使用秀米原生模块，让文本框、正文和照片可以分别复制、编辑与换图。`--preserve-styles` 保留行内样式，不会自动把整体 HTML 改成原生模块；模块化流程及保存、普通复制验证见 [技能文档](.claude/skills/all-to-xiumi/SKILL.md) 和 [操作参考](.claude/skills/all-to-xiumi/references/modular-authoring.md)。
+
 发布核心完全沿用 html-to-xiumi 的秀米交互（登录、填充、图片上传、保存、恢复对话框处理），并沉淀了经真实草稿验证的编辑器陷阱（见 [SKILL.md](.claude/skills/all-to-xiumi/SKILL.md)）。
 
 ## 安装
