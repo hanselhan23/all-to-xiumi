@@ -46,6 +46,8 @@ def main(argv=None):
         help="图片处理模式（默认取 XIUMI_IMAGE_MODE）",
     )
     parser.add_argument("--html-only", action="store_true", help="只生成富文本 HTML，不打开浏览器")
+    parser.add_argument("--wechat-copy", action="store_true", help="生成可直接复制到公众号的单文件 HTML，不经过秀米")
+    parser.add_argument("--output", default="", help="--wechat-copy 产物的 HTML 路径，不覆盖原稿")
     parser.add_argument("--dry-run", action="store_true", help="打开并填充编辑器，但不点击保存")
     parser.add_argument("--upload-probe", action="store_true", help="上传前先测试图片上传链路")
     parser.add_argument(
@@ -69,6 +71,8 @@ def main(argv=None):
 
     if args.base_format and args.no_base_format:
         parser.error("--base-format 与 --no-base-format 不能同时使用")
+    if args.output and not args.wechat_copy:
+        parser.error("--output 仅用于 --wechat-copy")
 
     apply_base_format = None
     if args.base_format:
@@ -82,7 +86,7 @@ def main(argv=None):
     result = run_skill(
         args.input,
         template=args.template,
-        to_xiumi=not args.html_only,
+        to_xiumi=not (args.html_only or args.wechat_copy),
         title=args.title,
         subtitle=args.subtitle,
         author=args.author,
@@ -98,11 +102,13 @@ def main(argv=None):
         login_timeout=args.login_timeout,
         save_timeout=args.save_timeout,
         output_dir=args.output_dir,
+        wechat_copy=args.wechat_copy,
+        output_path=args.output,
     )
 
     if result.get("draft_url"):
         print(f"秀米草稿: {result['draft_url']}")
-    return 0 if result.get("status") in ("saved", "dry_run", "html_only") else 1
+    return 0 if result.get("status") in ("saved", "dry_run", "html_only", "wechat_copy_ready") else 1
 
 
 if __name__ == "__main__":

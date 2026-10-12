@@ -111,6 +111,8 @@ def run_skill(
     login_timeout: int = 0,
     save_timeout: int = 0,
     output_dir: str = "output",
+    wechat_copy: bool = False,
+    output_path: str = "",
 ) -> dict:
     """
     统一主流程：识别输入类型 → （md/pdf 生成富文本） → 发布到秀米草稿。
@@ -135,6 +137,8 @@ def run_skill(
         login_timeout: 登录超时秒数。
         save_timeout: 保存超时秒数。
         output_dir: md/pdf 生成 HTML 的输出目录。
+        wechat_copy: 生成带“复制到公众号”按钮的内嵌图片 HTML，不经过秀米。
+        output_path: 直接复制模式的目标 HTML 路径，不覆盖原稿。
 
     Returns:
         dict: 包含 html_content, html_path, markdown_text, template, draft_url 等字段。
@@ -184,13 +188,14 @@ def run_skill(
             template=template,
             title=title,
             subtitle=subtitle,
-            markdown_path=str(path.parent),
+            markdown_path=str(path),
         )
         out_dir = pathlib.Path(output_dir)
         out_dir.mkdir(parents=True, exist_ok=True)
         html_path = out_dir / f"{path.stem}.html"
-        html_path.write_text(html_content, encoding="utf-8")
-        print(f"✅ 富文本已保存: {html_path} ({html_path.stat().st_size:,} bytes)")
+        if not wechat_copy:
+            html_path.write_text(html_content, encoding="utf-8")
+            print(f"✅ 富文本已保存: {html_path} ({html_path.stat().st_size:,} bytes)")
 
         publish_html_path = html_path
         publish_markdown = str(path)
@@ -200,6 +205,21 @@ def run_skill(
         publish_html_path = path
         sibling_md = path.with_suffix(".md")
         publish_markdown = str(sibling_md) if sibling_md.exists() else ""
+
+    if wechat_copy:
+        from .wechat_copy import prepare_wechat_copy
+
+        target = pathlib.Path(output_path) if output_path else pathlib.Path(output_dir) / f"{path.stem}.html"
+        if target.resolve() == path:
+            raise ValueError("直接复制产物不能覆盖原稿；请另选 --output 或 --output-dir")
+        html_content, copy_report = prepare_wechat_copy(html_content, base_dir=path.parent, title=title or path.stem)
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_text(html_content, encoding="utf-8")
+        print(f"✅ 公众号直接复制 HTML: {target} ({target.stat().st_size:,} bytes)")
+        return {"html_content": html_content, "html_path": str(target),
+                "markdown_text": raw_text if source_kind == "markdown" else "",
+                "template": template if source_kind == "markdown" else "", "structure": structure,
+                "draft_url": "", "status": "wechat_copy_ready", "copy_report": copy_report}
 
     if apply_base_format is None:
         apply_base_format = source_kind == "html"

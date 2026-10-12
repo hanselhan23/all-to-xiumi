@@ -1,6 +1,6 @@
 ---
 name: all-to-xiumi
-description: Save local HTML, Markdown, or PDF content as a Xiumi editor draft. Prefer native Xiumi modules when an article needs continued authoring, graphical editing, or template handoff. HTML can retain inline design styles with --preserve-styles; Markdown/PDF use template conversion. Covers import, module organization, and saving, not material collection or automatic body-text generation.
+description: Save local HTML, Markdown, or PDF as a Xiumi draft, or build a self-contained HTML article for direct rich-text copying into WeChat without Xiumi. Prefer native modules for continued Xiumi editing or handoff. Direct-copy mode inlines body styles, validates and embeds images, and verifies actual copy/paste. Covers conversion, modules, and draft workflows, not material collection or automatic article writing.
 ---
 
 # all-to-xiumi
@@ -29,6 +29,20 @@ One CLI + Python API that turns a local file into a saved Xiumi (秀米) draft:
 - Obtain HTML from the reloaded draft through Xiumi's ordinary Export → continue with copy/paste flow. Visually compare phone and wide layouts with the source, checking typography, colors, frame decorations, photo columns, background angle, animation, and footer clipping. Report a WeChat save round-trip as passed only after actually pasting, saving, and previewing there; state the verification boundary when the WeChat draft is read-only.
 
 For component construction, design migration, and export issues, read [Native Xiumi authoring and validation](references/modular-authoring.md) (Chinese). The CLI remains the single-publish interface described below; do not invent a modularity flag.
+
+## Direct copy into a WeChat draft without Xiumi
+
+When the user requests direct WeChat import, use `--wechat-copy` and skip Xiumi login, import, and saving. HTML retains its article structure; Markdown/PDF first use template conversion. Inline body styles and validate and embed each image without re-encoding its bytes. Produce one HTML file with a Copy to WeChat button, preserving the original. The button copies article `text/html` and `text/plain`, excludes the toolbar, and does not save the WeChat draft.
+
+```powershell
+pip install -e ".[wechat]"  # Run in the all-to-xiumi repository
+all-to-xiumi input.html --wechat-copy --output "output/wechat-copy.html"
+all-to-xiumi input.md --template generic --wechat-copy --output "output/wechat-copy.html"
+```
+
+Before delivery, actually click the button and paste natively. Compare text, image bytes, computed styles, and phone/wide visuals. Reading `innerHTML` does not replace a clipboard round trip; copy success does not mean draft-save success. When the user only requests a rich-text copy check, stop at native pasting into an independent editable area and do not operate the WeChat backend. Only when the user explicitly requests draft-save verification and the intended backend is editable, paste into that draft, click Save, wait for explicit success, and reopen to verify media and layout. Leave the acceptance window open. Do not claim lossless WeChat persistence without this backend test.
+
+Read [Direct WeChat copy and validation](references/wechat-direct-copy.md) (Chinese) for media limits and commands. `--html-only` still produces ordinary HTML and does not replace this mode. Retain the Xiumi workflow when native Xiumi editing is needed.
 
 ## Commands
 
